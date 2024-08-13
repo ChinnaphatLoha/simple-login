@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
-import { ForbiddenError } from '@/errors'
+import { UnauthorizedError } from '@/errors'
 
 const username = ref('')
 const password = ref('')
@@ -17,7 +17,7 @@ const handleSubmit = async () => {
     await login(username.value, password.value)
     router.push({ name: 'welcome' })
   } catch (error) {
-    if (error instanceof ForbiddenError) {
+    if (error instanceof UnauthorizedError) {
       errorMessage.value = 'Invalid username or password'
     } else {
       errorMessage.value = 'An unexpected error occurred. Please try again.'

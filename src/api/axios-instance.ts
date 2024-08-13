@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ForbiddenError } from '@/errors'
+import { UnauthorizedError, ForbiddenError } from '@/errors'
 
 const client = axios.create({
   baseURL: '/api',
@@ -30,6 +30,8 @@ client.interceptors.response.use(
       const errorMessage = error.message
 
       switch (error.response?.status) {
+        case 401:
+          throw new UnauthorizedError(errorMessage)
         case 403:
           throw new ForbiddenError(errorMessage)
         default:
