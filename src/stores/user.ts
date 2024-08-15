@@ -1,5 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { login } from '@/api/user-api'
+import { getCookie, setCookie, deleteCookie } from '@/utils/cookie-util'
 
 interface UserState {
   isLoggedIn: boolean
@@ -7,17 +8,17 @@ interface UserState {
 
 export const useUserStore = defineStore('user', {
   state: (): UserState => ({
-    isLoggedIn: !!localStorage.getItem('token')
+    isLoggedIn: !!getCookie('token')
   }),
   actions: {
     async login(username: string, password: string) {
       const { data } = await login({ username, password })
       this.isLoggedIn = true
-      localStorage.setItem('token', data.access_token)
+      setCookie('token', data.access_token)
     },
     logout() {
       this.isLoggedIn = false
-      localStorage.removeItem('token')
+      deleteCookie('token')
     }
   }
 })

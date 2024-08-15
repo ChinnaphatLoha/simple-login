@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getCookie } from '@/utils/cookie-util'
 import { UnauthorizedError, ForbiddenError } from '@/errors'
 
 const client = axios.create({
@@ -10,7 +11,7 @@ const client = axios.create({
 
 client.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token')
+    const token = getCookie('token')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
