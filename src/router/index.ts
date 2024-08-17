@@ -25,7 +25,6 @@ const router = createRouter({
 router.beforeEach((to, _, next) => {
   const userStore = useUserStore()
   if (to.meta.requiresAuth && !userStore.isLoggedIn) {
-    console.log('Not logged in, redirecting to login')
     next({ name: 'login' })
   } else {
     next()

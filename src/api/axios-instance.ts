@@ -18,7 +18,7 @@ client.interceptors.request.use(
     return config
   },
   (error) => {
-    return Promise.reject(error)
+    return Promise.reject(new Error(error))
   }
 )
 
@@ -39,7 +39,7 @@ client.interceptors.response.use(
           throw error
       }
     }
-    return Promise.reject(error)
+    return Promise.reject(new Error(error))
   }
 )
 
